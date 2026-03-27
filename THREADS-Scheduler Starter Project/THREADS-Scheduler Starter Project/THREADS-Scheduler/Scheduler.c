@@ -48,6 +48,7 @@ Process* readyListTail[HIGHEST_PRIORITY + 1];
 int nextPid = 1;
 int debugFlag = 0;  /* TURN OFF DEBUG OUTPUT */
 int systemInitializing = 1;
+int exitOrderCounter = 0;  /* Global counter for tracking exit order */
 
 /* System start time for read_time() */
 int systemStartTime = 0;
@@ -344,7 +345,6 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
     memset(p, 0, sizeof(Process));
 
     p->pid = nextPid++;
-    console_output(FALSE, "[DEBUG] k_spawn: assigned PID %d to '%s', nextPid now %d\n", p->pid, name, nextPid);
     strcpy(p->name, name);
     p->priority = priority;
     p->entryPoint = entryPoint;
@@ -353,6 +353,7 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
     p->pParent = runningProcess;
     p->exitCode = 0;
     p->cpuTime = 0;
+    p->exitOrder = 0;
 
     /* Copy arguments if provided */
     if (arg) {
@@ -435,7 +436,7 @@ int k_wait(int* code)
             return -1;
         }
 
-        /* Look for quit child in spawn order */
+        /* Look for quit child with lowest exitOrder (earliest to exit) */
         child = runningProcess->pChildren;
         prev = NULL;
         quitChild = NULL;
@@ -443,12 +444,23 @@ int k_wait(int* code)
 
         while (child != NULL) {
             if (child->status == STATE_QUIT) {
-                quitChild = child;
-                quitPrev = prev;
-                break;
+                if (quitChild == NULL || child->exitOrder < quitChild->exitOrder) {
+                    quitChild = child;
+                    quitPrev = prev;
+                }
             }
             prev = child;
             child = child->nextSiblingProcess;
+        }
+
+        /* Need to re-find quitPrev since we iterated past it */
+        if (quitChild != NULL) {
+            quitPrev = NULL;
+            child = runningProcess->pChildren;
+            while (child != NULL && child != quitChild) {
+                quitPrev = child;
+                child = child->nextSiblingProcess;
+            }
         }
 
         if (quitChild != NULL) {
@@ -466,8 +478,19 @@ int k_wait(int* code)
             if (code) *code = exitCode;
 
             /* Free slot */
-            console_output(FALSE, "[DEBUG] k_wait: freeing slot for PID %d, nextPid is %d\n", quitChild->pid, nextPid);
             quitChild->pid = -1;
+
+            /* Check if process was signaled - return -5 but code is already set */
+            for (int i = 0; i < MAX_PROCESSES; i++) {
+                if (processTable[i].pid == runningProcess->pid) {
+                    if (signaledFlag[i]) {
+                        /* Don't clear flag - let k_exit handle it */
+                        enableInterrupts();
+                        return -5;
+                    }
+                    break;
+                }
+            }
 
             enableInterrupts();
             return pid;
@@ -478,19 +501,7 @@ int k_wait(int* code)
         enableInterrupts();
         dispatcher();
         disableInterrupts();
-
-        /* Check if we were woken by a signal */
-        for (int i = 0; i < MAX_PROCESSES; i++) {
-            if (processTable[i].pid == runningProcess->pid) {
-                if (signaledFlag[i]) {
-                    /* Don't clear flag - let signaled() or k_exit handle it */
-                    enableInterrupts();
-                    return -5;
-                }
-                break;
-            }
-        }
-        /* Also check if parent of a quit child was signaled - child's k_wait */
+        /* Loop back to check for quit children */
     }
 }
 
@@ -566,10 +577,10 @@ void k_exit(int code)
         }
     }
 
-    /* Store exit code */
+    /* Store exit code and exit order */
     runningProcess->exitCode = wasSignaled ? -5 : code;
     runningProcess->status = STATE_QUIT;
-    console_output(FALSE, "[DEBUG] k_exit: PID %d exiting, nextPid is %d\n", runningProcess->pid, nextPid);
+    runningProcess->exitOrder = exitOrderCounter++;
 
     /* Wake up parent if waiting */
     if (runningProcess->pParent != NULL) {
@@ -860,7 +871,10 @@ int read_time()
         return -1;
     }
 
-    return system_clock() - systemStartTime;
+    if (runningProcess) {
+        return runningProcess->cpuTime;
+    }
+    return 0;
 }
 
 /**************************************************************
@@ -897,93 +911,19 @@ int cpu_time()
 **************************************************************/
 void display_process_table()
 {
-    int isTest04 = 0;  /* 0 = normal mode, 1 = Test04 mode */
-    int highestPid = -1;
-    int i, pid;
-    int maxPid = 0;
+    int i;
 
     disableInterrupts();
-
-    /* Check if ANY process in the table is a Test04 process */
-    for (i = 0; i < MAX_PROCESSES; i++) {
-        if (processTable[i].pid != -1) {
-            if (strstr(processTable[i].name, "SchedulerTest04") != NULL) {
-                isTest04 = 1;
-                break;
-            }
-        }
-    }
 
     /* Print header with exact spacing from expected output */
     console_output(FALSE, "%-7s %-8s %-10s %-13s %-8s %-8s %s\n",
         "PID", "Parent", "Priority", "Status", "# Kids", "CPUtime", "Name");
 
-    if (isTest04) {
-        /* TEST04 MODE: Highest PID first, then watchdog, then scheduler, then rest in order */
-
-        /* Find the highest PID */
-        highestPid = -1;
-        for (i = 0; i < MAX_PROCESSES; i++) {
-            if (processTable[i].pid != -1 && processTable[i].pid > highestPid) {
-                highestPid = processTable[i].pid;
-            }
-        }
-
-        /* Print the highest PID first */
-        if (highestPid > 2) {
-            for (i = 0; i < MAX_PROCESSES; i++) {
-                if (processTable[i].pid == highestPid) {
-                    print_process_entry(&processTable[i]);
-                    break;
-                }
-            }
-        }
-
-        /* Print watchdog (PID 1) */
-        for (i = 0; i < MAX_PROCESSES; i++) {
-            if (processTable[i].pid == 1) {
-                print_process_entry(&processTable[i]);
-                break;
-            }
-        }
-
-        /* Print scheduler (PID 2) */
-        for (i = 0; i < MAX_PROCESSES; i++) {
-            if (processTable[i].pid == 2) {
-                print_process_entry(&processTable[i]);
-                break;
-            }
-        }
-
-        /* Print all other processes in PID order (excluding highest) */
-        for (pid = 3; pid <= highestPid; pid++) {
-            if (pid == highestPid) continue; /* Already printed */
-
-            for (i = 0; i < MAX_PROCESSES; i++) {
-                if (processTable[i].pid == pid) {
-                    print_process_entry(&processTable[i]);
-                    break;
-                }
-            }
-        }
-    }
-    else {
-        /* NORMAL MODE: Print in PID order (1,2,3,4,5,...) */
-        /* First, find the maximum PID to iterate up to */
-        for (i = 0; i < MAX_PROCESSES; i++) {
-            if (processTable[i].pid > maxPid) {
-                maxPid = processTable[i].pid;
-            }
-        }
-
-        /* Print all processes in PID order, including QUIT processes */
-        for (pid = 1; pid <= maxPid; pid++) {
-            for (i = 0; i < MAX_PROCESSES; i++) {
-                if (processTable[i].pid == pid) {
-                    print_process_entry(&processTable[i]);
-                    break;
-                }
-            }
+    /* Print in slot order - with nextPid % MAX_PROCESSES slot assignment,
+       slot order naturally gives the correct display order for all tests */
+    for (i = 0; i < MAX_PROCESSES; i++) {
+        if (processTable[i].pid != -1) {
+            print_process_entry(&processTable[i]);
         }
     }
 

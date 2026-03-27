@@ -21,4 +21,5 @@ typedef struct _process
     int            status;            /* READY, RUNNING, WAIT_BLOCK, JOIN_BLOCK, QUIT, BLOCKED */
     int            exitCode;          /* Exit code when process quits */
     int            cpuTime;           /* CPU time used by this process */
+    int            exitOrder;         /* Order in which process exited (for k_wait) */
 } Process;
