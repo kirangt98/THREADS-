@@ -323,17 +323,18 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
         return -2;
     }
 
-    /* Find free slot (pid == -1 means free) */
+    /* Find free slot using nextPid % MAX_PROCESSES as starting position */
     slot = -1;
-    for (int i = 0; i < MAX_PROCESSES; i++) {
-        if (processTable[i].pid == -1) {
-            slot = i;
+    for (int attempts = 0; attempts < MAX_PROCESSES; attempts++) {
+        int idx = nextPid % MAX_PROCESSES;
+        if (processTable[idx].pid == -1) {
+            slot = idx;
             break;
         }
+        nextPid++;  /* Skip PID for occupied slot */
     }
 
     if (slot < 0) {
-        nextPid++;  /* Consume PID even on failure */
         enableInterrupts();
         return -4;  /* Process table full */
     }
@@ -343,6 +344,7 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
     memset(p, 0, sizeof(Process));
 
     p->pid = nextPid++;
+    console_output(FALSE, "[DEBUG] k_spawn: assigned PID %d to '%s', nextPid now %d\n", p->pid, name, nextPid);
     strcpy(p->name, name);
     p->priority = priority;
     p->entryPoint = entryPoint;
@@ -464,6 +466,7 @@ int k_wait(int* code)
             if (code) *code = exitCode;
 
             /* Free slot */
+            console_output(FALSE, "[DEBUG] k_wait: freeing slot for PID %d, nextPid is %d\n", quitChild->pid, nextPid);
             quitChild->pid = -1;
 
             enableInterrupts();
@@ -566,6 +569,7 @@ void k_exit(int code)
     /* Store exit code */
     runningProcess->exitCode = wasSignaled ? -5 : code;
     runningProcess->status = STATE_QUIT;
+    console_output(FALSE, "[DEBUG] k_exit: PID %d exiting, nextPid is %d\n", runningProcess->pid, nextPid);
 
     /* Wake up parent if waiting */
     if (runningProcess->pParent != NULL) {
