@@ -331,6 +331,7 @@ void sys_exit(int resultCode)
 *********************************************************************************/
 int k_semcreate(int initial_value)
 {
+    static int nextSlot = 0;
     int sem_id = -1;
 
     checkKernelMode(__func__);
@@ -338,15 +339,17 @@ int k_semcreate(int initial_value)
     if (initial_value < 0)
         return -1;
 
-    /* Find a free slot */
+    /* Find a free slot using next-fit allocation */
     for (int i = 0; i < MAXSEMS; i++)
     {
-        if (semTable[i].status == 0)
+        int idx = (nextSlot + i) % MAXSEMS;
+        if (semTable[idx].status == 0)
         {
-            semTable[i].status = 1;
-            semTable[i].count = initial_value;
-            semTable[i].waitCount = 0;
-            sem_id = i;
+            semTable[idx].status = 1;
+            semTable[idx].count = initial_value;
+            semTable[idx].waitCount = 0;
+            sem_id = idx;
+            nextSlot = (idx + 1) % MAXSEMS;
             break;
         }
     }
@@ -525,10 +528,13 @@ static void system_call_handler(system_call_arguments_t* args)
 
     case SYS_WAIT:
     {
-        int status = -1;
+        int status;
         int pid = sys_wait(&status);
         args->arguments[0] = (intptr_t)pid;
-        args->arguments[1] = (intptr_t)status;
+        if (pid > 0)
+        {
+            args->arguments[1] = (intptr_t)status;
+        }
         args->arguments[3] = (intptr_t)(pid > 0 ? 0 : -1);
         break;
     }
