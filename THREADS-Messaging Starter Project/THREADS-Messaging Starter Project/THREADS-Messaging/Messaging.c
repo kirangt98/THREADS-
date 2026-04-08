@@ -227,7 +227,7 @@ int SchedulerEntryPoint(void* arg)
 
     /* Spawn the Messaging test process */
     pid = k_spawn("MessagingEntryPoint", MessagingEntryPoint, NULL,
-        4 * THREADS_MIN_STACK_SIZE, 3);
+        4 * THREADS_MIN_STACK_SIZE, HIGHEST_PRIORITY);
 
     if (pid > 0) {
         k_wait(&status);

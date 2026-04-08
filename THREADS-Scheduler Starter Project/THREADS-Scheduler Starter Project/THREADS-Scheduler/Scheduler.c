@@ -315,7 +315,7 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
     if (priority < LOWEST_PRIORITY || priority > HIGHEST_PRIORITY) {
         console_output(debugFlag, "spawn(): Priority out of range.\n");
         enableInterrupts();
-        return -1;  /* Priority out of range */
+        return -3;  /* Priority out of range */
     }
 
     if (stacksize < THREADS_MIN_STACK_SIZE) {
