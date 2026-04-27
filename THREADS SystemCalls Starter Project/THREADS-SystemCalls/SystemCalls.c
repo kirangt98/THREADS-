@@ -52,7 +52,7 @@ typedef struct sem_data
     int sem_id;     /* unique identifier (index) */
     int count;      /* current semaphore value */
     int waitCount;  /* number of processes blocked on this sem */
-    int waitPids[MAXPROC]; /* PIDs of blocked processes (FIFO queue) */
+    int waitPids[MAXPROC]; /* PIDs of blocked processes FIFO queue */
     int waitPriorities[MAXPROC]; /* priorities of blocked processes */
 } SemData;
 
@@ -112,7 +112,7 @@ static int childrenOrder(void* pNode1, void* pNode2);
 
 
 /*********************************************************************************
-* childrenOrder - order function for TList (FIFO, no reordering)
+* childrenOrder - order function for TList FIFO, no reordering
 *********************************************************************************/
 static int childrenOrder(void* pNode1, void* pNode2)
 {
@@ -155,7 +155,7 @@ int MessagingEntryPoint(char* arg)
         userProcTable[i].parentSlot = -1;
         userProcTable[i].startFunc = NULL;
         TListInitialize(&userProcTable[i].children,
-            (int)((size_t)&((UserProcess*)0)->pNextSibling),
+            (int)((size_t) & ((UserProcess*)0)->pNextSibling),
             NULL);
     }
 
@@ -425,7 +425,7 @@ int k_semv(int sem_id)
 
     if (semTable[sem_id].waitCount > 0)
     {
-        /* Unblock the first waiter (FIFO order) */
+        /* Unblock the first waiter */
         int pidToUnblock = semTable[sem_id].waitPids[0];
 
         /* Shift the queue */
@@ -441,7 +441,6 @@ int k_semv(int sem_id)
     }
     else
     {
-        /* No waiters, just increment */
         semTable[sem_id].count++;
         result = 0;
     }
@@ -470,7 +469,7 @@ int k_semfree(int sem_id)
     {
         /* Unblock all waiters - they will detect freed sem and exit with 1 */
         int count = semTable[sem_id].waitCount;
-        semTable[sem_id].status = 0; /* Mark as freed BEFORE unblocking */
+        semTable[sem_id].status = 0; /* Mark as freed before unblocking */
 
         for (int i = 0; i < count; i++)
         {
@@ -541,7 +540,6 @@ static void system_call_handler(system_call_arguments_t* args)
 
     case SYS_EXIT:
         sys_exit((int)args->arguments[0]);
-        /* Does not return */
         break;
 
     case SYS_SEMCREATE:

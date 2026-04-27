@@ -1,0 +1,505 @@
+
+DevicesTest00: Started
+DevicesTest00:  Going to sleep for 10 seconds
+DevicesTest00: Slept 10106
+All processes completed.
+
+DevicesTest01: started
+DevicesTest01: Waiting on Child
+DevicesTest01-Child1:	started
+DevicesTest01-Child1:	Sleeping for 1 seconds
+DevicesTest01-Child2:	started
+DevicesTest01-Child2:	Sleeping for 3 seconds
+DevicesTest01-Child3:	started
+DevicesTest01-Child3:	Sleeping for 5 seconds
+DevicesTest01-Child4:	started
+DevicesTest01-Child4:	Sleeping for 7 seconds
+DevicesTest01-Child5:	started
+DevicesTest01-Child5:	Sleeping for 9 seconds
+DevicesTest01-Child6:	started
+DevicesTest01-Child6:	Sleeping for 11 seconds
+DevicesTest01-Child7:	started
+DevicesTest01-Child7:	Sleeping for 13 seconds
+DevicesTest01-Child8:	started
+DevicesTest01-Child8:	Sleeping for 15 seconds
+DevicesTest01-Child9:	started
+DevicesTest01-Child9:	Sleeping for 17 seconds
+DevicesTest01-Child10:	started
+DevicesTest01-Child10:	Sleeping for 19 seconds
+DevicesTest01-Child1:	Slept 1087 milliseconds
+DevicesTest01: Wait returned 0, pid:9, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child2:	Slept 3034 milliseconds
+DevicesTest01: Wait returned 0, pid:10, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child3:	Slept 5043 milliseconds
+DevicesTest01: Wait returned 0, pid:11, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child4:	Slept 7019 milliseconds
+DevicesTest01: Wait returned 0, pid:12, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child5:	Slept 9013 milliseconds
+DevicesTest01: Wait returned 0, pid:13, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child6:	Slept 11020 milliseconds
+DevicesTest01: Wait returned 0, pid:14, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child7:	Slept 13011 milliseconds
+DevicesTest01: Wait returned 0, pid:15, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child8:	Slept 15004 milliseconds
+DevicesTest01: Wait returned 0, pid:16, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child9:	Slept 17066 milliseconds
+DevicesTest01: Wait returned 0, pid:17, status 0
+DevicesTest01: Waiting on Child
+DevicesTest01-Child10:	Slept 19085 milliseconds
+DevicesTest01: Wait returned 0, pid:18, status 0
+All processes completed.
+
+DevicesTest02: Started
+DevicesTest02:  Calling DiskInfo for disk0
+DevicesTest02:  DiskInfo returned sectorSize 512, sectorCount 16, trackCount 128, platterCount 1
+DevicesTest02:  Calling DiskInfo for disk1
+DevicesTest02:  DiskInfo returned sectorSize 512, sectorCount 16, trackCount 512, platterCount 3
+All processes completed.
+
+DevicesTest03:	Started
+DevicesTest03:	Calling DiskInfo for disk0
+DevicesTest03:	DiskInfo returned sectorSize 512, sectorCount 16, trackCount 128, platterCount 1
+DevicesTest03:	Writing to disk 0, platter 0, track 5, sector 0
+DevicesTest03:	DiskWrite returned status = 0
+DevicesTest03:	Reading from disk 0, platter 0, track 5, sector 0
+DevicesTest03:	DiskRead returned status = 0
+DevicesTest03:	In and Out buffers match!
+All processes completed.
+
+DevicesTest04:	Started
+DevicesTest04:	Calling DiskInfo for disk0
+DevicesTest04:	DiskInfo returned sectorSize 512, sectorCount 16, trackCount 128, platterCount 1
+DevicesTest04:	Writing to disk 0, platter 0, track 6, sectors 3-6
+DevicesTest04:	DiskWrite returned status = 0
+DevicesTest04:	Reading from disk 0, platter 0, track 6, sectors 3-6
+DevicesTest04:	DiskRead returned status = 0
+DevicesTest04:	In and Out buffers match!
+All processes completed.
+
+DevicesTest05:	Started
+DevicesTest05:	Writing to disk 0, platter 0, track 1, sectors 1-3
+DevicesTest05:	DiskWrite returned status = 0
+DevicesTest05:	Writing to disk 1, platter 1, track 2, sectors 8-12
+DevicesTest05:	DiskWrite returned status = 0
+DevicesTest05:	Reading from disk 0, platter 0, track 1, sectors 1-3
+DevicesTest05:	DiskRead returned status = 0
+DevicesTest05:	In and Out buffers match!
+DevicesTest05:	Reading from disk 1, platter 1, track 2, sectors 8-12
+DevicesTest05:	DiskRead returned status = 0
+DevicesTest05:	In and Out buffers match!
+All processes completed.
+
+DevicesTest06:	Started
+DevicesTest06:	Writing data to 3 disk sectors, wrapping to next track
+DevicesTest06:	DiskWrite returned status = 0
+DevicesTest06:	Reading data from 3 disk sectors, wrapping to next track
+DevicesTest06:	DiskRead returned status = 0
+DevicesTest06:	In and Out buffers match!
+All processes completed.
+	DevicesTest07: started
+DevicesTest07-Child1:	started
+DevicesTest07-Child2:	started
+DevicesTest07-Child3:	started
+DevicesTest07-Child4:	started
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 05, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 04, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 07, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 05, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 07, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 05, sectorCount 01, status 0x00000000
+DevicesTest07-Child4:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest07-Child3:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest07-Child2:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest07-Child1:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest07:	Test Complete
+All processes completed.
+
+DevicesTest08:	Started
+DevicesTest08:	Writing to an invalid sector 
+DevicesTest08:	DiskWrite sector error test PASSED
+DevicesTest08:	Writing to an invalid track 
+DevicesTest08:	DiskWrite track error test PASSED
+DevicesTest08:	Writing to an invalid platter 
+DevicesTest08:	DiskWrite platter error test PASSED
+All processes completed.
+
+DevicesTest09: started
+DevicesTest09-Child1:	started
+DevicesTest09-Child2:	started
+DevicesTest09-Child3:	started
+DevicesTest09-Child4:	started
+DevicesTest09-Child5:	started
+DevicesTest09-Child6:	started
+DevicesTest09-Child7:	started
+DevicesTest09-Child8:	started
+DevicesTest09-Child9:	started
+DevicesTest09-Child10:	started
+DevicesTest09-Child11:	started
+DevicesTest09-Child12:	started
+DevicesTest09-Child13:	started
+DevicesTest09-Child14:	started
+DevicesTest09-Child15:	started
+DevicesTest09-Child16:	started
+DevicesTest09-Child1:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest09-Child14:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest09-Child6:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest09-Child3:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest09-Child15:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest09-Child16:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest09-Child7:	DiskWrite (disk0) -  platter 0, track 10, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest09-Child8:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest09-Child9:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest09-Child10:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest09-Child2:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest09-Child11:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest09-Child12:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest09-Child13:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest09-Child5:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest09-Child4:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest09: Test complete
+All processes completed.
+
+DevicesTest10: started
+DevicesTest10-Child1:	started
+DevicesTest10-Child2:	started
+DevicesTest10-Child3:	started
+DevicesTest10-Child4:	started
+DevicesTest10-Child5:	started
+DevicesTest10-Child6:	started
+DevicesTest10-Child7:	started
+DevicesTest10-Child8:	started
+DevicesTest10-Child1:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 05, sectorCount 01, status 0x00000000
+DevicesTest10-Child2:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest10-Child3:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest10-Child4:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest10-Child5:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 07, sectorCount 01, status 0x00000000
+DevicesTest10-Child6:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest10-Child7:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest10-Child8:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 06, sectorCount 01, status 0x00000000
+DevicesTest10: Test complete
+All processes completed.
+
+DevicesTest11: started
+DevicesTest11-Child1:	started
+DevicesTest11-Child2:	started
+DevicesTest11-Child3:	started
+DevicesTest11-Child4:	started
+DevicesTest11-Child5:	started
+DevicesTest11-Child6:	started
+DevicesTest11-Child7:	started
+DevicesTest11-Child8:	started
+DevicesTest11-Child9:	started
+DevicesTest11-Child10:	started
+DevicesTest11-Child11:	started
+DevicesTest11-Child12:	started
+DevicesTest11-Child13:	started
+DevicesTest11-Child14:	started
+DevicesTest11-Child15:	started
+DevicesTest11-Child16:	started
+DevicesTest11-Child1:	DiskWrite (disk0) -  platter 0, track 11, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest11-Child2:	DiskRead  (disk0) -  platter 0, track 12, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest11-Child8:	DiskRead  (disk0) -  platter 0, track 12, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest11-Child14:	DiskRead  (disk0) -  platter 0, track 13, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest11-Child16:	DiskRead  (disk0) -  platter 0, track 13, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest11-Child15:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest11-Child11:	DiskWrite (disk0) -  platter 0, track 10, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest11-Child13:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest11-Child9:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest11-Child6:	DiskRead  (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest11-Child4:	DiskRead  (disk0) -  platter 0, track 05, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest11-Child7:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest11-Child3:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest11-Child10:	DiskRead  (disk0) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest11-Child12:	DiskRead  (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest11-Child5:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest11: Test complete
+All processes completed.
+
+DevicesTest12: started
+DevicesTest12-Child1:	started
+DevicesTest12-Child2:	started
+DevicesTest12-Child2:	Sleeping for 1 seconds
+DevicesTest12-Child3:	started
+DevicesTest12-Child3:	Sleeping for 2 seconds
+DevicesTest12-Child4:	started
+DevicesTest12-Child4:	Sleeping for 3 seconds
+DevicesTest12-Child5:	started
+DevicesTest12-Child5:	Sleeping for 4 seconds
+DevicesTest12-Child6:	started
+DevicesTest12-Child7:	started
+DevicesTest12-Child8:	started
+DevicesTest12-Child9:	started
+DevicesTest12-Child6:	DiskWrite (disk0) -  platter 0, track 07, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest12-Child8:	DiskRead  (disk1) -  platter 0, track 07, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest12-Child7:	DiskWrite (disk0) -  platter 0, track 07, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest12-Child9:	DiskRead  (disk1) -  platter 0, track 07, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest12-Child2:	Slept 1067 milliseconds
+DevicesTest12-Child3:	Slept 2045 milliseconds
+DevicesTest12-Child4:	Slept 3037 milliseconds
+DevicesTest12-Child5:	Slept 4030 milliseconds
+DevicesTest12: Test complete
+All processes completed.
+
+DevicesTest13: started
+DevicesTest13-Child1:	started
+DevicesTest13-Child1:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child2:	started
+DevicesTest13-Child3:	started
+DevicesTest13-Child4:	started
+DevicesTest13-Child5:	started
+DevicesTest13-Child6:	started
+DevicesTest13-Child7:	started
+DevicesTest13-Child8:	started
+DevicesTest13-Child2:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child6:	DiskWrite (disk0) -  platter 0, track 07, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child5:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child4:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child7:	DiskWrite (disk0) -  platter 0, track 11, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child8:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child3:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child9:	started
+DevicesTest13-Child10:	started
+DevicesTest13-Child11:	started
+DevicesTest13-Child12:	started
+DevicesTest13-Child13:	started
+DevicesTest13-Child14:	started
+DevicesTest13-Child15:	started
+DevicesTest13-Child9:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child11:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child14:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child13:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child15:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child10:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13-Child12:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest13: Test complete
+All processes completed.
+
+DevicesTest14: started
+DevicesTest14-Child1:	started
+DevicesTest14-Child1:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child2:	started
+DevicesTest14-Child3:	started
+DevicesTest14-Child4:	started
+DevicesTest14-Child5:	started
+DevicesTest14-Child6:	started
+DevicesTest14-Child7:	started
+DevicesTest14-Child8:	started
+DevicesTest14-Child9:	started
+DevicesTest14-Child2:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child4:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child6:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child8:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child9:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child7:	DiskWrite (disk0) -  platter 0, track 13, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child5:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14-Child3:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest14: Test complete
+All processes completed.
+
+DevicesTest15: started
+DevicesTest15-Child1:	started
+DevicesTest15-Child1:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child2:	started
+DevicesTest15-Child3:	started
+DevicesTest15-Child4:	started
+DevicesTest15-Child5:	started
+DevicesTest15-Child6:	started
+DevicesTest15-Child7:	started
+DevicesTest15-Child8:	started
+DevicesTest15-Child9:	started
+DevicesTest15-Child2:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child9:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child3:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child8:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child4:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child5:	DiskWrite (disk0) -  platter 0, track 10, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child6:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15-Child7:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest15: Test complete
+All processes completed.
+
+DevicesTest16: started
+DevicesTest16-Child1:	started
+DevicesTest16-Child1:	DiskWrite (disk0) -  platter 0, track 10, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child2:	started
+DevicesTest16-Child3:	started
+DevicesTest16-Child4:	started
+DevicesTest16-Child5:	started
+DevicesTest16-Child6:	started
+DevicesTest16-Child7:	started
+DevicesTest16-Child8:	started
+DevicesTest16-Child9:	started
+DevicesTest16-Child2:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child9:	DiskWrite (disk0) -  platter 0, track 13, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child3:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child4:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child8:	DiskWrite (disk0) -  platter 0, track 11, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child7:	DiskWrite (disk0) -  platter 0, track 05, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child6:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16-Child5:	DiskWrite (disk0) -  platter 0, track 01, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest16: Test complete
+All processes completed.
+
+DevicesTest17: started
+DevicesTest17-Child1:	started
+DevicesTest17-Child2:	started
+DevicesTest17-Child3:	started
+DevicesTest17-Child4:	started
+DevicesTest17-Child5:	started
+DevicesTest17-Child6:	started
+DevicesTest17-Child7:	started
+DevicesTest17-Child8:	started
+DevicesTest17-Child9:	started
+DevicesTest17-Child10:	started
+DevicesTest17-Child11:	started
+DevicesTest17-Child12:	started
+DevicesTest17-Child13:	started
+DevicesTest17-Child14:	started
+DevicesTest17-Child15:	started
+DevicesTest17-Child16:	started
+DevicesTest17-Child1:	DiskWrite (disk0) -  platter 0, track 00, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest17-Child9:	DiskWrite (disk1) -  platter 0, track 02, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest17-Child2:	DiskWrite (disk0) -  platter 0, track 03, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest17-Child14:	DiskWrite (disk1) -  platter 0, track 01, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest17-Child7:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 04, sectorCount 01, status 0x00000000
+DevicesTest17-Child10:	DiskWrite (disk1) -  platter 0, track 05, sectorStart 05, sectorCount 01, status 0x00000000
+DevicesTest17-Child3:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 06, sectorCount 01, status 0x00000000
+DevicesTest17-Child15:	DiskWrite (disk1) -  platter 0, track 07, sectorStart 07, sectorCount 01, status 0x00000000
+DevicesTest17-Child8:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest17-Child11:	DiskWrite (disk1) -  platter 0, track 08, sectorStart 00, sectorCount 01, status 0x00000000
+DevicesTest17-Child4:	DiskWrite (disk0) -  platter 0, track 09, sectorStart 01, sectorCount 01, status 0x00000000
+DevicesTest17-Child16:	DiskWrite (disk1) -  platter 0, track 10, sectorStart 02, sectorCount 01, status 0x00000000
+DevicesTest17-Child5:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 04, sectorCount 01, status 0x00000000
+DevicesTest17-Child12:	DiskWrite (disk1) -  platter 0, track 11, sectorStart 03, sectorCount 01, status 0x00000000
+DevicesTest17-Child6:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 07, sectorCount 01, status 0x00000000
+DevicesTest17-Child13:	DiskWrite (disk1) -  platter 0, track 14, sectorStart 06, sectorCount 01, status 0x00000000
+DevicesTest17: Test complete
+All processes completed.
+
+DevicesTest18: started
+DevicesTest18-Child1:	started
+DevicesTest18-Child2:	started
+DevicesTest18-Child3:	started
+DevicesTest18-Child4:	started
+DevicesTest18-Child5:	started
+DevicesTest18-Child6:	started
+DevicesTest18-Child7:	started
+DevicesTest18-Child8:	started
+DevicesTest18-Child1:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child2:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child3:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child4:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child5:	DiskWrite (disk0) -  platter 0, track 10, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child6:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child7:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child8:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child9:	started
+DevicesTest18-Child10:	started
+DevicesTest18-Child11:	started
+DevicesTest18-Child12:	started
+DevicesTest18-Child13:	started
+DevicesTest18-Child14:	started
+DevicesTest18-Child15:	started
+DevicesTest18-Child16:	started
+DevicesTest18-Child9:	DiskRead  (disk0) -  platter 0, track 02, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child9:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child10:	DiskRead  (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child10:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child11:	DiskRead  (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child11:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child12:	DiskRead  (disk0) -  platter 0, track 08, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child12:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child13:	DiskRead  (disk0) -  platter 0, track 10, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child13:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child14:	DiskRead  (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child14:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child15:	DiskRead  (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child15:	DiskRead  (disk0) -  Output match!
+DevicesTest18-Child16:	DiskRead  (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest18-Child16:	DiskRead  (disk0) -  Output match!
+DevicesTest18: Test complete
+All processes completed.
+
+DevicesTest19: started
+DevicesTest19-Child1:	started
+DevicesTest19-Child2:	started
+DevicesTest19-Child3:	started
+DevicesTest19-Child4:	started
+DevicesTest19-Child5:	started
+DevicesTest19-Child6:	started
+DevicesTest19-Child7:	started
+DevicesTest19-Child8:	started
+DevicesTest19-Child9:	started
+DevicesTest19-Child10:	started
+DevicesTest19-Child11:	started
+DevicesTest19-Child12:	started
+DevicesTest19-Child13:	started
+DevicesTest19-Child14:	started
+DevicesTest19-Child15:	started
+DevicesTest19-Child16:	started
+DevicesTest19-Child1:	DiskWrite (disk0) -  platter 0, track 02, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child9:	DiskRead  (disk0) -  platter 0, track 02, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child9:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child2:	DiskWrite (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child10:	DiskRead  (disk0) -  platter 0, track 04, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child10:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child3:	DiskWrite (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child11:	DiskRead  (disk0) -  platter 0, track 06, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child11:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child4:	DiskWrite (disk0) -  platter 0, track 08, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child12:	DiskRead  (disk0) -  platter 0, track 08, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child12:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child5:	DiskWrite (disk0) -  platter 0, track 10, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child13:	DiskRead  (disk0) -  platter 0, track 10, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child13:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child6:	DiskWrite (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child14:	DiskRead  (disk0) -  platter 0, track 12, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child14:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child7:	DiskWrite (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child15:	DiskRead  (disk0) -  platter 0, track 14, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child15:	DiskRead  (disk0) -  Output match!
+DevicesTest19-Child8:	DiskWrite (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child16:	DiskRead  (disk0) -  platter 0, track 15, sectorStart 09, sectorCount 01, status 0x00000000
+DevicesTest19-Child16:	DiskRead  (disk0) -  Output match!
+DevicesTest19: Test complete
+All processes completed.
+
+DevicesTest20: Started
+DevicesTest20: SleepSeconds(0)    returned -1 -- PASSED
+DevicesTest20: SleepSeconds(-1)   returned -1 -- PASSED
+DevicesTest20: SleepSeconds(-100) returned -1 -- PASSED
+DevicesTest20: SleepSeconds(2) returned 0, slept 2044 ms -- PASSED
+All processes completed.
+
+DevicesTest21: Started
+DevicesTest21: DiskWrite invalid device test -- PASSED
+DevicesTest21: DiskRead  invalid device test -- PASSED
+DevicesTest21: DiskInfo  invalid device test -- PASSED
+DevicesTest21: DiskWrite valid device sanity check -- PASSED  (status = 0)
+All processes completed.

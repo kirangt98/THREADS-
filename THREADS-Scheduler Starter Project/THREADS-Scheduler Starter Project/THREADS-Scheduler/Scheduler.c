@@ -1097,5 +1097,5 @@ static void wakeup_joiners(Process* proc)
 **************************************************************/
 int check_io_scheduler()
 {
-    return 0;  /* Always return 0 as per requirements */
+    return 0;  
 }
