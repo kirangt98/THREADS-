@@ -22,4 +22,5 @@ typedef struct _process
     int            exitCode;          /* Exit code when process quits */
     int            cpuTime;           /* CPU time used by this process */
     int            exitOrder;         /* Order in which process exited (for k_wait) */
+    int            startTime;         /* Process start time in microseconds */
 } Process;

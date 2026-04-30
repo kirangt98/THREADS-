@@ -16,8 +16,8 @@
 #define STATE_QUIT         5
 #define STATE_BLOCKED      14   /* Generic blocked state (>10 as required) */
 
-/* Time slice in milliseconds */
-#define TIME_SLICE_MS 80
+/* Time slice quantum: 80ms expressed in read_clock() units (microseconds) */
+#define TIME_SLICE_US 80000
 
 /* Prototypes */
 static int watchdog(char*);
@@ -56,8 +56,8 @@ int systemStartTime = 0;
 /* Signal flags - kept for backward compatibility but not heavily used */
 int signaledFlag[MAX_PROCESSES];
 
-/* Timer interrupt count for time slicing */
-int timerTicks = 0;
+/* Wall-clock time when current process began its quantum */
+unsigned int sliceStartClock = 0;
 
 /* DO NOT REMOVE */
 extern int SchedulerEntryPoint(void* pArgs);
@@ -176,11 +176,9 @@ static void timer_interrupt_handler(char deviceId[32], uint8_t command, uint32_t
         runningProcess->cpuTime++;
     }
 
-    timerTicks++;
-
-    /* Preempt every TIME_SLICE_MS (assuming 1 tick = 1ms) */
-    if (timerTicks >= TIME_SLICE_MS) {
-        timerTicks = 0;
+    /* Preempt when wall-clock quantum expires (independent of tick rate) */
+    if ((unsigned int)(read_clock() - sliceStartClock) >= TIME_SLICE_US) {
+        sliceStartClock = read_clock();
         time_slice();
     }
 }
@@ -312,6 +310,12 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
         stop(1);
     }
 
+    /* Validate arg length per spec: halt if larger than max */
+    if (arg != NULL && strlen((char*)arg) >= MAXARG) {
+        console_output(debugFlag, "spawn(): Process arg is too long.  Halting...\n");
+        stop(1);
+    }
+
     if (priority < LOWEST_PRIORITY || priority > HIGHEST_PRIORITY) {
         console_output(debugFlag, "spawn(): Priority out of range.\n");
         enableInterrupts();
@@ -354,6 +358,7 @@ int k_spawn(char* name, int (*entryPoint)(void*), void* arg,
     p->exitCode = 0;
     p->cpuTime = 0;
     p->exitOrder = 0;
+    p->startTime = system_clock();
 
     /* Copy arguments if provided */
     if (arg) {
@@ -644,9 +649,10 @@ int k_kill(int pid, int signal)
         }
     }
 
-    /* If process is in generic blocked state (>10), wake it up */
-    /* Do NOT wake WAIT_BLOCK or JOIN_BLOCK - let them detect signal when naturally woken */
-    if (proc->status > 10) {
+    /* Wake up the process if blocked so it can observe the signal */
+    if (proc->status > 10 ||
+        proc->status == STATE_WAIT_BLOCK ||
+        proc->status == STATE_JOIN_BLOCK) {
         proc->status = STATE_READY;
         add_to_ready_list(proc);
     }
@@ -749,6 +755,18 @@ int k_join(int pid, int* pChildExitCode)
     /* When we wake up, the target has quit - get its exit code */
     if (pChildExitCode) *pChildExitCode = target->exitCode;
 
+    /* Check if signaled while blocked */
+    for (int i = 0; i < MAX_PROCESSES; i++) {
+        if (processTable[i].pid == runningProcess->pid) {
+            if (signaledFlag[i]) {
+                signaledFlag[i] = 0;
+                enableInterrupts();
+                return -5;
+            }
+            break;
+        }
+    }
+
     enableInterrupts();
     return 0;
 }
@@ -783,8 +801,8 @@ int unblock(int pid)
         return -1;
     }
 
-    /* Only unblock if blocked */
-    if (proc->status == STATE_BLOCKED) {
+    /* Only unblock if in a user-defined blocked state (>10) */
+    if (proc->status > 10) {
         proc->status = STATE_READY;
         add_to_ready_list(proc);
 
@@ -828,8 +846,18 @@ int block(int newStatus)
     enableInterrupts();
     dispatcher();
 
-    /* When we return, we've been unblocked */
+    /* When we return, we've been unblocked - check signaled flag */
     disableInterrupts();
+    for (int i = 0; i < MAX_PROCESSES; i++) {
+        if (processTable[i].pid == runningProcess->pid) {
+            if (signaledFlag[i]) {
+                signaledFlag[i] = 0;
+                enableInterrupts();
+                return -5;
+            }
+            break;
+        }
+    }
     enableInterrupts();
     return 0;
 }
@@ -839,19 +867,17 @@ int block(int newStatus)
 **************************************************************/
 int signaled()
 {
-    int slot;
-
     if (!inKernelMode()) {
         console_output(debugFlag, "Kernel mode expected, but function called in user mode.\n");
         stop(1);
         return -1;
     }
 
-    /* Find slot for running process and check/clear signal flag */
+    /* Per PDF: future calls must return 1 once signaled.
+       Do NOT clear the flag here; only k_exit clears it. */
     for (int i = 0; i < MAX_PROCESSES; i++) {
         if (processTable[i].pid == runningProcess->pid) {
             if (signaledFlag[i]) {
-                signaledFlag[i] = 0;
                 return 1;
             }
             break;
@@ -890,8 +916,9 @@ DWORD read_clock()
 **************************************************************/
 int get_start_time()
 {
-    /* In a real implementation, you'd track when each process started */
-    /* For now, return a dummy value */
+    if (runningProcess) {
+        return runningProcess->startTime;
+    }
     return 0;
 }
 
@@ -961,8 +988,8 @@ void dispatcher()
     next->status = STATE_RUNNING;
     runningProcess = next;
 
-    /* Reset timer ticks for new process */
-    timerTicks = 0;
+    /* Reset slice timer for new process */
+    sliceStartClock = read_clock();
 
     /* Context switch enables interrupts */
     context_switch(next->context);
