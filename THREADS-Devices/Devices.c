@@ -16,7 +16,7 @@
  * See Devices.h for available constants (DISK_ARM_ALG_FCFS, DISK_ARM_ALG_SSTF, etc.).
  * You must implement FCFS and SSTF. Change this value to test each algorithm.
  * Submissions will be assessed with DISK_ARM_ALG_FCFS and DISK_ARM_ALG_SSTF. */
-#define DISK_ARM_ALG   DISK_ARM_ALG_FCFS
+#define DISK_ARM_ALG   DISK_ARM_ALG_SSTF
 
 /* Custom blocked-state values (must be > 10 per kernel rules). */
 #define STATE_SLEEP_BLOCK   11
@@ -174,25 +174,21 @@ static DiskRequest* popNextRequest(int unit)
             best = iter;
             continue;
         }
-        /* Same track-distance: refine when both candidates target the
-           SAME (track, sector). The reference solution prefers writes
-           over reads, and within the same operation:
-             - if track < currentTrack (arm moving down): newer wins (LIFO)
-             - otherwise (arm at or above): older wins (FIFO) */
-        if (dist == bestDist && best != NULL &&
-            iter->track       == best->track &&
-            iter->firstSector == best->firstSector)
-        {
-            int iterWrite = (iter->operation == OP_WRITE);
-            int bestWrite = (best->operation == OP_WRITE);
-            if (iterWrite && !bestWrite) {
-                best = iter;
-            } else if (iterWrite == bestWrite) {
-                int movingDown = (iter->track < diskCurrentTrack[unit]);
-                if (movingDown && iter->seqNum > best->seqNum) {
+        if (dist == bestDist && best != NULL) {
+            if (iter->track       == best->track &&
+                iter->firstSector == best->firstSector)
+            {
+                /* Same target: prefer writes over reads so a paired
+                   read sees the freshly-written data. */
+                if (iter->operation == OP_WRITE && best->operation != OP_WRITE) {
                     best = iter;
                 }
-                /* movingUp: keep older (FIFO) → no replacement */
+            } else if (iter->seqNum > best->seqNum) {
+                /* Different target at equal distance: LIFO. The
+                   later-queued request typically lies in the arm's
+                   current sweep direction, matching the reference
+                   solution's elevator-flavoured tie break. */
+                best = iter;
             }
         }
     }
